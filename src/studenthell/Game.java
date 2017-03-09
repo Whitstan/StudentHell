@@ -34,7 +34,6 @@ public class Game implements Runnable {
 
     private void tick(){
         player.tick();
-        System.out.println("asd");
         keyManager.tick();
     }
 
