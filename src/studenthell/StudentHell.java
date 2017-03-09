@@ -1,7 +1,5 @@
 package studenthell;
 
-import studenthell.model.Game;
-
 public class StudentHell{
     
     public static void main(String[] args) {
