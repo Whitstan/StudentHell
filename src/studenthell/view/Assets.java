@@ -1,5 +1,6 @@
-package studenthell;
+package studenthell.view;
 
+import studenthell.model.ImageLoader;
 import java.awt.image.BufferedImage;
 
 public class Assets {
