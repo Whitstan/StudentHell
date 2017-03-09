@@ -11,7 +11,6 @@ public class Assets {
 
 	public static void init(){
             SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
-
             player = sheet.crop(0, 0, WIDTH, HEIGHT);
             exam = sheet.crop(WIDTH, 0, WIDTH, HEIGHT);
             exam2 = sheet.crop(WIDTH*2, 0, WIDTH, HEIGHT);

@@ -11,13 +11,9 @@ public class HighScoreEntity{
 
     public HighScoreEntity(int ID) {this.ID = ID;}
     
-    public void setID(int ID){
-        this.ID = ID;
-    }
+    public void setID(int ID){this.ID = ID;}
     
-    public int getID(){
-        return this.ID;
-    }
+    public int getID(){return this.ID;}
     
     public String getPlayername() {return playername;}
 

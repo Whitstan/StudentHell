@@ -13,7 +13,7 @@ public class HighScoreEntityController{
 
     private final String FULL_SELECT_SQL;
     private final String SELECT_BY_ID_SQL;
-
+    
     public HighScoreEntityController(String TABLE_NAME) {
         FULL_SELECT_SQL = "SELECT * FROM " + TABLE_NAME;
         SELECT_BY_ID_SQL = FULL_SELECT_SQL + " WHERE ID = ";

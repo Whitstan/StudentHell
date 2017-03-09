@@ -1,6 +1,5 @@
 package studenthell.model;
 
-import studenthell.model.Player;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import studenthell.view.Assets;

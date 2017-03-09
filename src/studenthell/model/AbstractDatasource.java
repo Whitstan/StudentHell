@@ -5,8 +5,10 @@ import java.sql.SQLException;
 
 public abstract class AbstractDatasource {
 
+    
     public final ConnectionFactory connectionFactory;
 
+    
     public AbstractDatasource(String url, String user, String password) {
         ConnectionFactory.initializeInstance(url, user, password);
         connectionFactory = ConnectionFactory.getInstance();

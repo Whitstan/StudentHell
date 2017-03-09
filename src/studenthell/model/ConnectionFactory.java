@@ -24,8 +24,7 @@ public class ConnectionFactory {
         int ID;
         try     (
                 final Connection connection = getConnection();
-                final Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, 
-                      ResultSet.CONCUR_UPDATABLE);
+                final Statement statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
                 final ResultSet rs = statement.executeQuery("SELECT VALUE_ FROM SEQ")) {
                 rs.next();
                 ID = rs.getInt("VALUE_") + 1;

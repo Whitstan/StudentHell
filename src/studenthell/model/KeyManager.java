@@ -8,9 +8,7 @@ public class KeyManager implements KeyListener {
     private final boolean[] keys;
     public boolean up, down, left, right;
 
-    public KeyManager(){
-        keys = new boolean[256];
-    }
+    public KeyManager(){keys = new boolean[256];}
 
     public void tick(){
         up = keys[KeyEvent.VK_W];
@@ -20,14 +18,10 @@ public class KeyManager implements KeyListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
-        keys[e.getKeyCode()] = true;
-    }
+    public void keyPressed(KeyEvent e) {keys[e.getKeyCode()] = true;}
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        keys[e.getKeyCode()] = false;
-    }
+    public void keyReleased(KeyEvent e) {keys[e.getKeyCode()] = false;}
 
     @Override
     public void keyTyped(KeyEvent e) {}

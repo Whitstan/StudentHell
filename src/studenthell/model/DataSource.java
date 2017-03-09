@@ -7,9 +7,7 @@ public class DataSource extends AbstractDatasource {
         super("jdbc:derby://localhost:1527/StudentHell", "StudentHell", "StudentHell");
     }
 
-    public static DataSource getInstance() {
-        return DataSourceHolder.INSTANCE;
-    }
+    public static DataSource getInstance() {return DataSourceHolder.INSTANCE;}
 
     private static class DataSourceHolder {
 

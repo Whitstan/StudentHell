@@ -17,9 +17,7 @@ public class DatabaseSetup {
             scanner.useDelimiter(";");
             while (scanner.hasNext()) {
                 String sql = scanner.next().trim();
-                if (sql.equals("")) {
-                    continue;
-                }
+                if (sql.equals("")) {continue;}
                 System.out.print(sql.replaceAll("\\s+", " "));
                 System.out.print(": ");
                 if (!sql.toUpperCase().startsWith("SELECT")) {
