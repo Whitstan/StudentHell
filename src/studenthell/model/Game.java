@@ -1,7 +1,10 @@
-package studenthell;
+package studenthell.model;
 
+import studenthell.model.Player;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import studenthell.view.Assets;
+import studenthell.view.Display;
 
 public class Game implements Runnable {
 
