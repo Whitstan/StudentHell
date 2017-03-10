@@ -1,15 +1,15 @@
 package studenthell.model;
 
-/*import java.io.File;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;*/
+import java.util.Scanner;
 
 public class DatabaseSetup {
 
-    public static void main(String[] args) /*throws SQLException, FileNotFoundException */{/*
+    public static void main(String[] args) throws SQLException, FileNotFoundException {
         try (
                 Scanner scanner = new Scanner(new File("src/studenthell.sql"));
                 Connection connection = DataSource.getInstance().getConnection();
@@ -29,6 +29,6 @@ public class DatabaseSetup {
                     }
                 }
             }
-        }*/
+        }
     }
 }

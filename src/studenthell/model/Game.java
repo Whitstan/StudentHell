@@ -51,7 +51,6 @@ public class Game implements Runnable {
         //Drawing
         g.drawImage(Assets.player, (int)player.getX(), (int)player.getY(), null);
         
-        
         //Drawing-end
 
         bs.show();
