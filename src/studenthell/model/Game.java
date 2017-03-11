@@ -51,6 +51,7 @@ public class Game implements Runnable {
         //Drawing
         g.drawImage(Assets.player, (int)player.getX(), (int)player.getY(), null);
         
+        
         //Drawing-end
 
         bs.show();
@@ -60,10 +61,30 @@ public class Game implements Runnable {
     @Override
     public void run(){
         init();
+        int fps = 60;
+        double timePerTick = 1000000000 / fps;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+
         while(running){
-            tick();
-            render();
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerTick;
+            timer += now - lastTime;
+            lastTime = now;
+
+            if(delta >= 1){
+                tick();
+                render();
+                delta--;
+            }
+
+            if(timer >= 1000000000){
+                timer = 0;
+            }
         }
+
         stop();
     }
 
