@@ -18,8 +18,23 @@ public class Assets {
             //exam2 = sheet.crop(WIDTH*2, 0, WIDTH, HEIGHT);
 */
             
-            SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheetgt.png"));
+            SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheetboss.png"));
+            //GT
             player = sheet.crop(1, 33, BOSS_WIDTH, BOSS_HEIGHT);
+            //Simon
+            //player = sheet.crop(1+64, 33, BOSS_WIDTH, BOSS_HEIGHT);
+            //Gergó
+            //player = sheet.crop(1, 33+64, BOSS_WIDTH, BOSS_HEIGHT);
+            //HZ
+            //player = sheet.crop(1+64, 33+64, BOSS_WIDTH, BOSS_HEIGHT);
+            //Ásványi
+            //player = sheet.crop(1, 33+128, BOSS_WIDTH, BOSS_HEIGHT);
+            //Illés
+            //player = sheet.crop(1+64, 33+128, BOSS_WIDTH, BOSS_HEIGHT);
+            //Pataki
+            //player = sheet.crop(1, 33+192, BOSS_WIDTH, BOSS_HEIGHT);
+            //NagyG
+            //player = sheet.crop(1+64, 33+192, BOSS_WIDTH, BOSS_HEIGHT);
 	}
 	
 }
