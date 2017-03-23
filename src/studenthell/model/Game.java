@@ -2,6 +2,7 @@ package studenthell.model;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import studenthell.Launcher;
 import studenthell.view.Assets;
 import studenthell.view.Display;
 
@@ -10,7 +11,8 @@ public class Game implements Runnable {
     private Display display;
     public int width, height;
     public String title;
-
+    
+    private int difficulty = 1;
     private boolean running = false;
     private Thread thread;
 
@@ -20,11 +22,23 @@ public class Game implements Runnable {
 
     private Player player;
 
-    public Game(String title, int width, int height){
+    public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String name){
         this.width = width;
         this.height = height;
         this.title = title;
         keyManager = new KeyManager();
+        
+        switch(difficulty){
+            case Medium:
+                this.difficulty = 2;
+                break;
+            case Hard:
+                this.difficulty = 3;
+                break;
+            case ExtremeSuicideHell:
+                this.difficulty = 5;
+                break;    
+        }
     }
 
     private void init(){
