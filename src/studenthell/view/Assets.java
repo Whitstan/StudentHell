@@ -11,16 +11,14 @@ public class Assets {
 	public static BufferedImage player/*, exam, exam2*/;
 
 	public static void init(){
-/*
             SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
             player = sheet.crop(0, 0, WIDTH, HEIGHT);
             //exam = sheet.crop(WIDTH, 0, WIDTH, HEIGHT);
             //exam2 = sheet.crop(WIDTH*2, 0, WIDTH, HEIGHT);
-*/
             
-            SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheetboss.png"));
+            //SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheetboss.png"));
             //GT
-            player = sheet.crop(1, 33, BOSS_WIDTH, BOSS_HEIGHT);
+            //player = sheet.crop(1, 33, BOSS_WIDTH, BOSS_HEIGHT);
             //Simon
             //player = sheet.crop(1+64, 33, BOSS_WIDTH, BOSS_HEIGHT);
             //Gergó

@@ -1,13 +1,8 @@
 package studenthell.view;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
-import javax.swing.JButton;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 public class Display {
 
@@ -21,7 +16,6 @@ public class Display {
         this.width = width;
         this.height = height;
         createDisplay();
-        addPlayerName();
     }
 
     private void createDisplay(){
@@ -40,22 +34,6 @@ public class Display {
 
         frame.add(canvas);
         frame.pack();
-    }
-    
-    private void addPlayerName() {
-        JFrame playerFrame = new JFrame("Játékos neve");
-
-        JLabel name = new JLabel("Adja meg a nevét");
-        JTextField textField = new JTextField(50);
-        JButton ok = new JButton("Ok");
-        
-        playerFrame.add(name, BorderLayout.NORTH);
-        playerFrame.add(textField, BorderLayout.CENTER);
-        playerFrame.add(ok, BorderLayout.EAST);
-
-        playerFrame.setSize(300, 100);
-        playerFrame.setLocationRelativeTo(null);
-        playerFrame.setVisible(true);
     }
 
     public Canvas getCanvas(){
