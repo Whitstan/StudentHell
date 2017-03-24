@@ -27,6 +27,7 @@ public class Game implements Runnable {
     private Player player;
     private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
     private int t = 0;
+    private long money = 10000;
 
     public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String name){
         this.width = width;
@@ -35,14 +36,14 @@ public class Game implements Runnable {
         keyManager = new KeyManager();
         
         switch(difficulty){
-            case Medium:
-                this.difficulty = 2;
-                break;
-            case Hard:
-                this.difficulty = 3;
-                break;
-            case ExtremeSuicideHell:
+            case Nem_az_erősségem_a_matek:
                 this.difficulty = 5;
+                break;
+            case Talán_nem_ide_kéne_jelentkezni:
+                this.difficulty = 10;
+                break;
+            case Ötször_öt_egyenlő_harminchat:
+                this.difficulty = 15;
                 break;    
         }
     }
@@ -53,12 +54,8 @@ public class Game implements Runnable {
         
         Random r = new Random();
         
-        for (int i=0; i<10; i++){
-            listOfEnemies.add(new Enemy(this,r.nextInt(600)+100 ,0,100,400,r.nextInt(8-1)+1));
-        }
-        
-        for (int i=0; i<listOfEnemies.size(); i++){
-            System.out.println("Enemy" + i + ": " + listOfEnemies.get(i).x + "," + listOfEnemies.get(i).y + " -> " + listOfEnemies.get(i).getType());
+        for (int i=0; i<100; i++){
+            listOfEnemies.add(new Enemy(this,r.nextInt(600)+100 ,-200,50,200,r.nextInt(8-1)+1));
         }
         
         display.getFrame().addKeyListener(keyManager);
@@ -75,15 +72,24 @@ public class Game implements Runnable {
                     t++;
                 }
             }
-        }, 0, 2000);
-        
+        }, 0, 500);
+        // - Periodic apperarnce of enemies
     }
 
     private void tick(){
         player.tick();
         keyManager.tick();
         for (int i=0; i<listOfEnemies.size(); i++){
-            listOfEnemies.get(i).tick();
+            if (!listOfEnemies.get(i).isDestroyed()){
+                listOfEnemies.get(i).tick();
+            }
+        }
+        for (int i=0; i<listOfEnemies.size(); i++){
+            if (listOfEnemies.get(i).isActive() && player.intersects(listOfEnemies.get(i))){
+                money -= 3500;
+                listOfEnemies.get(i).setDestroyed();
+                listOfEnemies.remove(i);
+            }
         }
     }
 
@@ -99,36 +105,45 @@ public class Game implements Runnable {
         //Drawing
         g.drawImage(Assets.player, (int)player.getX(), (int)player.getY(), null);
         for (int i=0; i<listOfEnemies.size(); i++){
-            if (listOfEnemies.get(i).isActive()){
+            if (listOfEnemies.get(i).isActive() && !listOfEnemies.get(i).isDestroyed()){
                 switch (listOfEnemies.get(i).getType()){
                     case 1:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam1, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 2:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam2, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 3:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam3, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 4:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam4, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 5:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam5, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 6:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam6, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 7:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam7, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                     case 8:
+                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
                         g.drawImage(Assets.exam8, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
                         break;
                 }
-
             }
         }
+        
+        g.drawString("Keret: " + Long.toString(money), 600, 50);
         
         //Drawing-end
 

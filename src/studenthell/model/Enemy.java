@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 public class Enemy extends Rectangle2D.Double{
 
     private final Game game;
-    private boolean outOfRoom = false;
+    private boolean destroyed = false;
     private boolean active = false;
     private int type = 0;
     
@@ -21,13 +21,9 @@ public class Enemy extends Rectangle2D.Double{
                 y += game.getDifficulty();   
             }
             else{
-                outOfRoom = true;
+                destroyed = true;
             }
         }
-    }
-    
-    public boolean getOutOfRoom(){
-        return outOfRoom;
     }
     
     public boolean isActive(){
@@ -40,6 +36,14 @@ public class Enemy extends Rectangle2D.Double{
     
     public void setActive(){
         active = true;
+    }
+    
+    public boolean isDestroyed(){
+        return destroyed;
+    }
+    
+    public void setDestroyed(){
+        destroyed = true;
     }
 }
 

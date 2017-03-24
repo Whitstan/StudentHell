@@ -9,7 +9,7 @@ public class Launcher extends JFrame implements ActionListener
 {
     public static enum EDifficulty 
     {
-        Easy, Medium, Hard, ExtremeSuicideHell;
+        Jól_megy_a_matek, Nem_az_erősségem_a_matek, Talán_nem_ide_kéne_jelentkezni, Ötször_öt_egyenlő_harminchat;
     }
     JButton buttonOk;
     JTextField textName;
@@ -18,15 +18,15 @@ public class Launcher extends JFrame implements ActionListener
             
     public Launcher()
     {
-        buttonOk = new JButton("Ok");
+        buttonOk = new JButton("Új félév!");
         textName = new JTextField();
         textName.setPreferredSize(new Dimension(100, 20));
-        labelName = new JLabel("Name:");
+        labelName = new JLabel("A Neptun-kódod pedig:");
         comboBoxDifficulty = new JComboBox();
-        comboBoxDifficulty.addItem(EDifficulty.Easy);
-        comboBoxDifficulty.addItem(EDifficulty.Medium);
-        comboBoxDifficulty.addItem(EDifficulty.Hard);
-        comboBoxDifficulty.addItem(EDifficulty.ExtremeSuicideHell);
+        comboBoxDifficulty.addItem(EDifficulty.Jól_megy_a_matek);
+        comboBoxDifficulty.addItem(EDifficulty.Nem_az_erősségem_a_matek);
+        comboBoxDifficulty.addItem(EDifficulty.Talán_nem_ide_kéne_jelentkezni);
+        comboBoxDifficulty.addItem(EDifficulty.Ötször_öt_egyenlő_harminchat);
         
         buttonOk.addActionListener(this);
         
@@ -34,7 +34,7 @@ public class Launcher extends JFrame implements ActionListener
         
         this.setLayout(new FlowLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-	setTitle("RUN BITCH");
+	setTitle("Beiratkozás");
 	setLocation(350, 250);
         setSize(650, 250);
         setVisible(true);
