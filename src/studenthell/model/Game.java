@@ -2,6 +2,10 @@ package studenthell.model;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import studenthell.Launcher;
 import studenthell.view.Assets;
 import studenthell.view.Display;
@@ -21,6 +25,8 @@ public class Game implements Runnable {
     private final KeyManager keyManager;
 
     private Player player;
+    private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
+    private int t = 0;
 
     public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String name){
         this.width = width;
@@ -44,13 +50,41 @@ public class Game implements Runnable {
     private void init(){
         display = new Display(title, width, height);
         Assets.init();
+        
+        Random r = new Random();
+        
+        for (int i=0; i<10; i++){
+            listOfEnemies.add(new Enemy(this,r.nextInt(600)+100 ,0,100,400,r.nextInt(8-1)+1));
+        }
+        
+        for (int i=0; i<listOfEnemies.size(); i++){
+            System.out.println("Enemy" + i + ": " + listOfEnemies.get(i).x + "," + listOfEnemies.get(i).y + " -> " + listOfEnemies.get(i).getType());
+        }
+        
         display.getFrame().addKeyListener(keyManager);
-        player = new Player(this,350,0,32,32);
+        player = new Player(this,368,500,32,32);
+        
+        //Periodic apperarnce of enemies
+        Timer timer = new Timer();
+ 
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (t < listOfEnemies.size()){
+                    listOfEnemies.get(t).setActive();
+                    t++;
+                }
+            }
+        }, 0, 2000);
+        
     }
 
     private void tick(){
         player.tick();
         keyManager.tick();
+        for (int i=0; i<listOfEnemies.size(); i++){
+            listOfEnemies.get(i).tick();
+        }
     }
 
     private void render(){
@@ -64,12 +98,46 @@ public class Game implements Runnable {
 
         //Drawing
         g.drawImage(Assets.player, (int)player.getX(), (int)player.getY(), null);
-        
+        for (int i=0; i<listOfEnemies.size(); i++){
+            if (listOfEnemies.get(i).isActive()){
+                switch (listOfEnemies.get(i).getType()){
+                    case 1:
+                        g.drawImage(Assets.exam1, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 2:
+                        g.drawImage(Assets.exam2, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 3:
+                        g.drawImage(Assets.exam3, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 4:
+                        g.drawImage(Assets.exam4, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 5:
+                        g.drawImage(Assets.exam5, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 6:
+                        g.drawImage(Assets.exam6, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 7:
+                        g.drawImage(Assets.exam7, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                    case 8:
+                        g.drawImage(Assets.exam8, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                        break;
+                }
+
+            }
+        }
         
         //Drawing-end
 
         bs.show();
         g.dispose();
+    }
+    
+    public int getDifficulty(){
+        return difficulty;
     }
 
     @Override
