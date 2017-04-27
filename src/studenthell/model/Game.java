@@ -26,8 +26,16 @@ public class Game implements Runnable {
 
     private Player player;
     private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
+
+    public ArrayList<Enemy> getListOfEnemies() {
+        return listOfEnemies;
+    }
     private int t = 0;
     private long money = 10000;
+
+    public long getMoney() {
+        return money;
+    }
 
     public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String name){
         this.width = width;
@@ -76,6 +84,12 @@ public class Game implements Runnable {
         // - Periodic apperarnce of enemies
     }
 
+    public void decreaseMoney(int i) {
+        money -= 3500;
+        listOfEnemies.get(i).setDestroyed();
+        listOfEnemies.remove(i);
+    }
+    
     private void tick(){
         player.tick();
         keyManager.tick();
@@ -86,9 +100,7 @@ public class Game implements Runnable {
         }
         for (int i=0; i<listOfEnemies.size(); i++){
             if (listOfEnemies.get(i).isActive() && player.intersects(listOfEnemies.get(i))){
-                money -= 3500;
-                listOfEnemies.get(i).setDestroyed();
-                listOfEnemies.remove(i);
+                decreaseMoney(i);
             }
         }
     }
