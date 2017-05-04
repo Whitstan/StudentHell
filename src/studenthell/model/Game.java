@@ -27,12 +27,14 @@ public class Game implements Runnable {
     private Player player;
     private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
 
+    private int t = 0;
+    private long money = 10000;
+    private int destroied;
+
     public ArrayList<Enemy> getListOfEnemies() {
         return listOfEnemies;
     }
-    private int t = 0;
-    private long money = 10000;
-
+    
     public long getMoney() {
         return money;
     }
@@ -55,16 +57,24 @@ public class Game implements Runnable {
                 break;    
         }
     }
-
-    private void init(){
-        display = new Display(title, width, height);
-        Assets.init();
-        
+    
+    /* FIXME: parameters
+     * Fill the list of enemies randomly
+     */
+    
+    private void loadTheEnemies(){
         Random r = new Random();
         
         for (int i=0; i<100; i++){
             listOfEnemies.add(new Enemy(this,r.nextInt(600)+100 ,-200,50,200,r.nextInt(8-1)+1));
         }
+    }
+
+    private void init(){
+        display = new Display(title, width, height);
+        Assets.init();
+        
+        loadTheEnemies();
         
         display.getFrame().addKeyListener(keyManager);
         player = new Player(this,368,500,32,32);
@@ -84,10 +94,53 @@ public class Game implements Runnable {
         // - Periodic apperarnce of enemies
     }
 
+    /** FIXME: Decrase amount parameter needed?
+     * Decrase Money when colloison occurs
+     * and delete that given enemy from 
+     * the list of enemies
+     * @param i
+     */
     public void decreaseMoney(int i) {
         money -= 3500;
         listOfEnemies.get(i).setDestroyed();
+        listOfEnemies.get(i).setInactive();
         listOfEnemies.remove(i);
+        destroied += 1;
+    }
+    
+    /**
+     * Delete the enemies 
+     * those passed over the edge
+     * from the list
+     * of enemies 
+     */
+    public void destroyPassedEnemies(){
+        for (int i = 0; i < listOfEnemies.size(); i++){
+            if(listOfEnemies.get(i).isDestroyed() && Math.abs(listOfEnemies.get(i).getY()) > height) {
+                listOfEnemies.get(i).setInactive();
+                listOfEnemies.remove(i);
+                destroied += 1;
+            }
+        }
+    }
+    
+    /** FIXME: what is this for?
+     * check for the end of the stage
+     * and prints the size of the list of enemies + "Jatek Vege" if ended
+     */
+    public void checkForEndOfTheStage(){
+        if (listOfEnemies.size() == 37 || listOfEnemies.size() == 48){
+            String result = String.format("sizeofList: %1$d", listOfEnemies.size());
+            System.out.println(result + "Jatek Vege");
+        }
+    }
+    
+    /* FIXME: find better solution
+     * Tells is the stage is ended or not
+     * Returns true if the stage is over
+     */
+    public boolean isEndOfTheStage() {
+        return listOfEnemies.size() == 37 || listOfEnemies.size() == 48;
     }
     
     private void tick(){
@@ -102,6 +155,14 @@ public class Game implements Runnable {
             if (listOfEnemies.get(i).isActive() && player.intersects(listOfEnemies.get(i))){
                 decreaseMoney(i);
             }
+        }
+        
+        destroyPassedEnemies();
+        
+        //FIXME: should appear a text in the canvas about the stage
+        if (isEndOfTheStage()){
+            System.out.println("New stage");
+            loadTheEnemies();
         }
     }
 

@@ -11,7 +11,7 @@ public class Player extends Rectangle2D.Double{
         this.game = game;
     }
     
-    public void tick(){
+    public void tick() {
         if (game.getKeyManager().up){setY(this.y - 5.0);}
         if (game.getKeyManager().down){setY(this.y + 5.0);}
         if (game.getKeyManager().left){setX(this.x - 5.0);}

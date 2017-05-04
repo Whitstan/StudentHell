@@ -38,6 +38,10 @@ public class Enemy extends Rectangle2D.Double{
         active = true;
     }
     
+    public void setInactive(){
+        active = false;
+    }
+    
     public boolean isDestroyed(){
         return destroyed;
     }
@@ -46,4 +50,3 @@ public class Enemy extends Rectangle2D.Double{
         destroyed = true;
     }
 }
-
