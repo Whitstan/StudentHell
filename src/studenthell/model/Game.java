@@ -29,7 +29,7 @@ public class Game implements Runnable {
 
     private int t = 0;
     private long money = 10000;
-    private int destroied;
+    private int stage = 1;
 
     public ArrayList<Enemy> getListOfEnemies() {
         return listOfEnemies;
@@ -105,7 +105,7 @@ public class Game implements Runnable {
         listOfEnemies.get(i).setDestroyed();
         listOfEnemies.get(i).setInactive();
         listOfEnemies.remove(i);
-        destroied += 1;
+        //destroied += 1;
     }
     
     /**
@@ -119,7 +119,7 @@ public class Game implements Runnable {
             if(listOfEnemies.get(i).isDestroyed() && Math.abs(listOfEnemies.get(i).getY()) > height) {
                 listOfEnemies.get(i).setInactive();
                 listOfEnemies.remove(i);
-                destroied += 1;
+                //destroied += 1;
             }
         }
     }
@@ -161,7 +161,8 @@ public class Game implements Runnable {
         
         //FIXME: should appear a text in the canvas about the stage
         if (isEndOfTheStage()){
-            System.out.println("New stage");
+            stage += 1;
+            System.out.println("New stage " + stage);
             loadTheEnemies();
         }
     }
