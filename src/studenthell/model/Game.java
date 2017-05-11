@@ -25,15 +25,12 @@ public class Game implements Runnable {
     private final KeyManager keyManager;
 
     private Player player;
-    private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
 
     private int t = 0;
+    private int enemiesPerLevel = 30;
     private long money = 10000;
     private int stage = 1;
-
-    public ArrayList<Enemy> getListOfEnemies() {
-        return listOfEnemies;
-    }
+    private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
     
     public long getMoney() {
         return money;
@@ -57,102 +54,61 @@ public class Game implements Runnable {
                 break;    
         }
     }
-    
-    /* FIXME: parameters
-     * Fill the list of enemies randomly
-     */
-    
-    private void loadTheEnemies(){
-        Random r = new Random();
-        
-        for (int i=0; i<30; i++){
-            //listOfEnemies.add(new Enemy(this,r.nextInt(600)+100 ,-200,50,200,r.nextInt(8-1)+1));
-            listOfEnemies.add(new Enemy(this,300 ,-200,50,200,2));
-        }
-    }
 
     private void init(){
         display = new Display(title, width, height);
         Assets.init();
         
-        loadTheEnemies();
-        
         display.getFrame().addKeyListener(keyManager);
         player = new Player(this,368,500,32,32);
         
-        //Periodic apperarnce of enemies
+        //Periodic apperance of enemies
         Timer timer = new Timer();
  
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (t < listOfEnemies.size()){
-                    listOfEnemies.get(t).setActive();
+                if (t != enemiesPerLevel){
+                    listOfEnemies.add(new Enemy(Game.this,300,-200,50,200,2));
                     t++;
                 }
+
             }
         }, 0, 500);
-        // - Periodic apperarnce of enemies
+        // - Periodic apperance of enemies
     }
 
-    /** FIXME: Decrase amount parameter needed?
-     * Decrase Money when colloison occurs
-     * and delete that given enemy from 
-     * the list of enemies
-     * @param i
-     */
+    public ArrayList<Enemy> getListOfEnemies(){
+        return this.listOfEnemies;
+    }
+    
     public void decreaseMoney(int i) {
         money -= 3500;
-        //listOfEnemies.remove(i);
-        listOfEnemies.get(i).setDestroyed();
+        listOfEnemies.remove(i);
     }
-    
-    /**
-     * Delete the enemies 
-     * those passed over the edge
-     * from the list
-     * of enemies 
-     */
-    public void destroyPassedEnemies(){
-        for (int i = 0; i < listOfEnemies.size(); i++){
-            if(Math.abs(listOfEnemies.get(i).getY()) > height) {
-                //listOfEnemies.remove(i);
-                listOfEnemies.get(i).setDestroyed();
-            }
-        }
-    }
-    
-    /* FIXME: find better solution
-     * Tells is the stage is ended or not
-     * Returns true if the stage is over
-     */
+
     public boolean isEndOfTheStage() {
-        return listOfEnemies.isEmpty();
+        return t == enemiesPerLevel;
     }
     
     private void tick(){
         player.tick();
         keyManager.tick();
-        destroyPassedEnemies();
         for (int i=0; i<listOfEnemies.size(); i++){
-            if (listOfEnemies.get(i).isActive() && player.intersects(listOfEnemies.get(i))){
+            if (player.intersects(listOfEnemies.get(i))){
                 decreaseMoney(i);
+            }
+            if (listOfEnemies.get(i).getY() > height){
+                listOfEnemies.remove(i);
             }
             listOfEnemies.get(i).tick(); 
         }
         
-        for (int i=0; i<listOfEnemies.size(); i++){
-            if (listOfEnemies.get(i).isDestroyed()){
-                listOfEnemies.remove(i);
-            }
-        }
-        
-        System.out.println("size: " + listOfEnemies.size());
         //FIXME: should appear a text in the canvas about the stage
         if (isEndOfTheStage()){
             stage += 1;
             System.out.println("New stage " + stage);
-            loadTheEnemies();
+            enemiesPerLevel = t + 10;
         }
     }
 
@@ -168,41 +124,39 @@ public class Game implements Runnable {
         //Drawing
         g.drawImage(Assets.player, (int)player.getX(), (int)player.getY(), null);
         for (int i=0; i<listOfEnemies.size(); i++){
-            if (listOfEnemies.get(i).isActive() && !listOfEnemies.get(i).isDestroyed()){
-                switch (listOfEnemies.get(i).getType()){
-                    case 1:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam1, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 2:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam2, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 3:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam3, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 4:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam4, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 5:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam5, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 6:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam6, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 7:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam7, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                    case 8:
-                        //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
-                        g.drawImage(Assets.exam8, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
-                        break;
-                }
+            switch (listOfEnemies.get(i).getType()){
+                case 1:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam1, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 2:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam2, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 3:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam3, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 4:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam4, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 5:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam5, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 6:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam6, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 7:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam7, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
+                case 8:
+                    //g.drawRect((int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), 50, 200);
+                    g.drawImage(Assets.exam8, (int)listOfEnemies.get(i).getX(), (int)listOfEnemies.get(i).getY(), null);
+                    break;
             }
         }
         

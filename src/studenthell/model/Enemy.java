@@ -5,8 +5,6 @@ import java.awt.geom.Rectangle2D;
 public class Enemy extends Rectangle2D.Double{
 
     private final Game game;
-    private boolean destroyed = false;
-    private boolean active = false;
     private int type = 0;
     
     public Enemy(Game game, double x, double y, double w, double h, int type) {
@@ -16,32 +14,10 @@ public class Enemy extends Rectangle2D.Double{
     }
     
     public void tick(){
-        if (active){
-            y += game.getDifficulty();   
-        }
-    }
-    
-    public boolean isActive(){
-        return active;
+        y += game.getDifficulty();   
     }
     
     public int getType(){
         return this.type;
-    }
-    
-    public void setActive(){
-        active = true;
-    }
-    
-    public void setInactive(){
-        active = false;
-    }
-    
-    public boolean isDestroyed(){
-        return destroyed;
-    }
-    
-    public void setDestroyed(){
-        destroyed = true;
     }
 }
