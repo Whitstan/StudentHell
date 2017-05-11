@@ -17,12 +17,7 @@ public class Enemy extends Rectangle2D.Double{
     
     public void tick(){
         if (active){
-            if (y <= game.height){
-                y += game.getDifficulty();   
-            }
-            else{
-                destroyed = true;
-            }
+            y += game.getDifficulty();   
         }
     }
     
