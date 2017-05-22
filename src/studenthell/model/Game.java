@@ -3,14 +3,13 @@ package studenthell.model;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import studenthell.Launcher;
 import studenthell.view.Assets;
 import studenthell.view.Display;
 
-public class Game implements Runnable {
+public class Game implements Runnable, Behavior<Enemy> {
 
     private Display display;
     public int width, height;
@@ -32,10 +31,21 @@ public class Game implements Runnable {
     private int stage = 1;
     private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
     
+    /*
+     * This method returns the long value of the current money of the Player
+     */
     public long getMoney() {
         return money;
     }
-
+    
+    /*
+     * The constructor have to be given whit theese arguments:
+     * Title : String
+     * Width: int value of the width of the canvas
+     * Height: int value of the height of the canvas
+     * Difficulty: Launcher.EDifficulty the difficulty of the game
+     * Name: String as the name of the Game
+     */
     public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String name){
         this.width = width;
         this.height = height;
@@ -78,22 +88,39 @@ public class Game implements Runnable {
         // - Periodic apperance of enemies
     }
 
+    /*
+     * This method is return the listOfEnemies state
+     */
     public ArrayList<Enemy> getListOfEnemies(){
         return this.listOfEnemies;
     }
     
+    /*
+     * This method is decrease the players money and
+     * remove the enemy what caused the collosion
+     */
     public void decreaseMoney(int i) {
         money -= 3500;
         listOfEnemies.remove(i);
     }
 
+    /*
+     * This method is check for is the and of the stage or not
+     * return true if the stage is ended or false if not
+     */
     public boolean isEndOfTheStage() {
         return t == enemiesPerLevel;
     }
     
-    private void tick(){
-        player.tick();
-        keyManager.tick();
+    
+    /*
+     * This method do the behavior of the enemies
+     * decrase money when collide occurs and
+     * remove that concrete enemy from the listOfEnemies list
+     * return with the integer number of the enemies int the listOfEnemies
+     */
+    @Override
+    public int doBehaviorOfEnemies() {
         for (int i=0; i<listOfEnemies.size()-1; i++){
             if (player.intersects(listOfEnemies.get(i))){
                 decreaseMoney(i);
@@ -103,12 +130,18 @@ public class Game implements Runnable {
             }
             listOfEnemies.get(i).tick(); 
         }
+        return listOfEnemies.size();
+    }
+    
+    private void tick(){
+        player.tick();
+        keyManager.tick();
         
-        //FIXME: should appear a text in the canvas about the stage
+        doBehaviorOfEnemies();
+
         if (isEndOfTheStage()){
             stage += 1;
             System.out.println("New stage " + stage);
-            
             enemiesPerLevel = t + 10;
         }
     }
@@ -150,13 +183,16 @@ public class Game implements Runnable {
         }
         
         g.drawString("Keret: " + Long.toString(money), 600, 50);
-        g.drawString("Level: " + stage, 100, 50);//fixme
+        g.drawString("Level: " + stage, 100, 50);
         //Drawing-end
 
         bs.show();
         g.dispose();
     }
     
+    /*
+     * This method returns the difficulty of the Game
+     */
     public int getDifficulty(){
         return difficulty;
     }
@@ -186,15 +222,24 @@ public class Game implements Runnable {
             if(timer >= 1000000000){
                 timer = 0;
             }
+            if(this.money == 0 || this.money < 0) {
+                //End the game
+            }
         }
 
         stop();
     }
 
+    /*
+     * This method return the KeyManager
+     */
     public KeyManager getKeyManager(){
 	return keyManager;
     }
     
+    /*
+     * This method start the Game
+     */
     public synchronized void start(){
         if(running) return;
         running = true;
@@ -202,11 +247,17 @@ public class Game implements Runnable {
         thread.start();
     }
 
+    /*
+     * This method stop the Game
+     */
     public synchronized void stop(){
         if(!running) return;
         running = false;
         try {
             thread.join();
-        } catch (InterruptedException e) {}
+            
+        } catch (InterruptedException e) {
+            System.err.println("Exception in stop game: " + e.getMessage());
+        }
     }
 }
