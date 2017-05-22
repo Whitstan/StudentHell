@@ -94,7 +94,7 @@ public class Game implements Runnable {
     private void tick(){
         player.tick();
         keyManager.tick();
-        for (int i=0; i<listOfEnemies.size(); i++){
+        for (int i=0; i<listOfEnemies.size()-1; i++){
             if (player.intersects(listOfEnemies.get(i))){
                 decreaseMoney(i);
             }
@@ -108,6 +108,7 @@ public class Game implements Runnable {
         if (isEndOfTheStage()){
             stage += 1;
             System.out.println("New stage " + stage);
+            
             enemiesPerLevel = t + 10;
         }
     }
@@ -149,7 +150,7 @@ public class Game implements Runnable {
         }
         
         g.drawString("Keret: " + Long.toString(money), 600, 50);
-        
+        g.drawString("Level: " + stage, 100, 50);//fixme
         //Drawing-end
 
         bs.show();
