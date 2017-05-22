@@ -3,6 +3,7 @@ package studenthell.model;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import studenthell.Launcher;
@@ -66,6 +67,8 @@ public class Game implements Runnable, Behavior<Enemy> {
     }
 
     private void init(){
+        Random r = new Random();
+        
         display = new Display(title, width, height);
         Assets.init();
         
@@ -79,7 +82,7 @@ public class Game implements Runnable, Behavior<Enemy> {
             @Override
             public void run() {
                 if (t != enemiesPerLevel){
-                    listOfEnemies.add(new Enemy(Game.this,300,-200,50,200,2));
+                    listOfEnemies.add(new Enemy(Game.this,300,-200,50,200,r.nextInt(8-1)+1));
                     t++;
                 }
 
