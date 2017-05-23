@@ -4,18 +4,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import studenthell.model.ConnectionFactory;
-import studenthell.model.HighScoreEntity;
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class HighScoreEntityController{
 
     private final String FULL_SELECT_SQL;
     private final String SELECT_BY_ID_SQL;
     
-    public HighScoreEntityController(String TABLE_NAME) {
-        FULL_SELECT_SQL = "SELECT * FROM " + TABLE_NAME;
+    public HighScoreEntityController() {
+        FULL_SELECT_SQL = "SELECT * FROM HIGHSCORES";
         SELECT_BY_ID_SQL = FULL_SELECT_SQL + " WHERE ID = ";
     }
 
@@ -29,7 +27,7 @@ public class HighScoreEntityController{
             todo.run(rs);
         }
     }
-
+    /*
     public List<HighScoreEntity> getEntities() throws SQLException {
         final List<HighScoreEntity> entities = new ArrayList<>();
         doOnResultSet(FULL_SELECT_SQL, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, (ResultSet rs) -> {
@@ -67,7 +65,7 @@ public class HighScoreEntityController{
         highScoreEntity.setPlayername(resultSet.getString("PLAYERNAME"));
         highScoreEntity.setScore(resultSet.getLong("SCORE"));
     }
-    
+    */
     public void addEntity(final HighScoreEntity entity) throws SQLException {
         doOnResultSet(FULL_SELECT_SQL, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE, (ResultSet rs) -> {
             rs.moveToInsertRow();
@@ -82,7 +80,7 @@ public class HighScoreEntityController{
         resultSet.updateLong("SCORE", highScoreEntity.getScore());
     }
     
-    public HighScoreEntity newEntity(){
+    /*public HighScoreEntity newEntity(){
         return new HighScoreEntity();
-    }
+    }*/
 }

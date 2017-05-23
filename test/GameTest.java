@@ -19,7 +19,7 @@ public class GameTest {
    
     @Test
     public void moneyTest() {     
-        Game game = new Game("Test", 800, 600, Launcher.EDifficulty.Nem_az_erősségem_a_matek, "TestName");
+        Game game = new Game("Test", 800, 600, Launcher.EDifficulty.DIF4, "TestName");
         
         for (int i = 0; i < 5; ++i) {
             game.getListOfEnemies().add(new Enemy(game, i,2,3,4,5));
@@ -35,7 +35,7 @@ public class GameTest {
     
     @Test
     public void moneyTestForTwoEnemyDecrase() {     
-        Game game = new Game("Test", 800, 600, Launcher.EDifficulty.Nem_az_erősségem_a_matek, "TestName");
+        Game game = new Game("Test", 800, 600, Launcher.EDifficulty.DIF4, "TestName");
         
         for (int i = 0; i < 5; ++i) {
             game.getListOfEnemies().add(new Enemy(game, i,2,3,4,5));

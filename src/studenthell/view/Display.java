@@ -43,4 +43,8 @@ public class Display {
     public JFrame getFrame(){
         return this.frame;
     }
+    
+    public void destroyWindow(){
+        this.getFrame().dispose();
+    }
 }

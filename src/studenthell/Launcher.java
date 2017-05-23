@@ -5,8 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Launcher extends JFrame implements ActionListener
-{
+public class Launcher extends JFrame implements ActionListener{
     public enum EDifficulty {
         DIF1("Jól megy a matek"),
         DIF2("Nem az erősségem a matek"),
@@ -39,8 +38,7 @@ public class Launcher extends JFrame implements ActionListener
     JLabel captcha;
     JTextField captchaTextField;
             
-    public Launcher()
-    {
+    public Launcher(){
         buttonOk = new JButton("Új félév!");
         textName = new JTextField();
         textName.setPreferredSize(new Dimension(100, 20));
@@ -79,15 +77,15 @@ public class Launcher extends JFrame implements ActionListener
 	setTitle("Beiratkozás");
 	setLocation(350, 250);
         setSize(650, 250);
+        
         setVisible(true);
         
     }
    
-    public void actionPerformed(ActionEvent e) 
-    {
-        if(e.getSource() == buttonOk && c.getCaptha().equals(captchaTextField.getText().toUpperCase()) )
-        {
-            Game game = new Game("StudentHell", 800, 600, (EDifficulty)comboBoxDifficulty.getSelectedItem(), textName.getText());
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == buttonOk && c.getCaptha().equals(captchaTextField.getText().toUpperCase()) ){
+            Game game = new Game("StudentHell", 1280, 720, (EDifficulty)comboBoxDifficulty.getSelectedItem(), textName.getText());
             game.start();
         } else {
             System.err.println("Wrong CAPTCHA");
@@ -113,7 +111,6 @@ public class Launcher extends JFrame implements ActionListener
                 }
             });
         }
-          
-        
+        dispose();
     }
 }

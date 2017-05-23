@@ -3,7 +3,7 @@ package studenthell.model;
 import java.util.Random;
 
 public class Captcha {
-    private String captha;
+    private String captcha;
 
     public Captcha() {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVW0123456789";
@@ -14,10 +14,10 @@ public class Captcha {
         for(int i=0; i<6; ++i) {
             sb.append(alphabet.charAt(r.nextInt(n)));
         }
-        captha = sb.toString();
+        captcha = sb.toString();
     }
 
     public String getCaptha() {
-        return captha;
+        return captcha;
     }
 }

@@ -6,6 +6,7 @@ public class Enemy extends Rectangle2D.Double{
 
     private final Game game;
     private int type = 0;
+    private boolean collided = false;
     
     public Enemy(Game game, double x, double y, double w, double h, int type) {
         super(x, y, w, h);
@@ -14,10 +15,18 @@ public class Enemy extends Rectangle2D.Double{
     }
     
     public void tick(){
-        y += game.getDifficulty();   
+        y += game.getDifficulty()*5;   
     }
     
     public int getType(){
         return this.type;
+    }
+    
+    public void setCollided(){
+        collided = true;
+    }
+    
+    public boolean getCollided(){
+        return this.collided;
     }
 }
