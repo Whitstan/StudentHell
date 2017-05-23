@@ -33,20 +33,21 @@ public class Game implements Runnable, Behavior<Enemy> {
     private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
     
     /*
-     * This method returns the long value of the current money of the Player
+     * This method returns the long value of the current money
      */
     public long getMoney() {
         return money;
     }
     
-    /*
-     * The constructor have to be given whit theese arguments:
-     * Title : String
-     * Width: int value of the width of the canvas
-     * Height: int value of the height of the canvas
-     * Difficulty: Launcher.EDifficulty the difficulty of the game
-     * Name: String as the name of the Game
+    /**
+     * The constructor have to be given with theese arguments:
+     *@param title the title of the window
+     *@param width: int value of the width of the canvas
+     *@param height: int value of the height of the canvas
+     *@param difficulty: Launcher.EDifficulty the difficulty of the game
+     *@param name: String as the name of the Game
      */
+    
     public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String name){
         this.width = width;
         this.height = height;
@@ -54,13 +55,13 @@ public class Game implements Runnable, Behavior<Enemy> {
         keyManager = new KeyManager();
         
         switch(difficulty){
-            case Nem_az_erősségem_a_matek:
+            case DIF2:
                 this.difficulty = 5;
                 break;
-            case Talán_nem_ide_kéne_jelentkezni:
+            case DIF3:
                 this.difficulty = 10;
                 break;
-            case Ötször_öt_egyenlő_harminchat:
+            case DIF4:
                 this.difficulty = 15;
                 break;    
         }
@@ -82,7 +83,14 @@ public class Game implements Runnable, Behavior<Enemy> {
             @Override
             public void run() {
                 if (t != enemiesPerLevel){
-                    listOfEnemies.add(new Enemy(Game.this,300,-200,50,200,r.nextInt(8-1)+1));
+                    int type = r.nextInt(8-1)+1;
+                    int width = 52;
+                    int height = 88;
+                    int xPosition = r.nextInt(700);
+                    if (type == 5){
+                        width = 90;
+                    }
+                    listOfEnemies.add(new Enemy(Game.this,xPosition,-200,width,height,type));
                     t++;
                 }
 
@@ -91,36 +99,34 @@ public class Game implements Runnable, Behavior<Enemy> {
         // - Periodic apperance of enemies
     }
 
-    /*
-     * This method is return the listOfEnemies state
+    /**
+     *@return This method is return the list of enemies
      */
     public ArrayList<Enemy> getListOfEnemies(){
         return this.listOfEnemies;
     }
     
-    /*
-     * This method is decrease the players money and
-     * remove the enemy what caused the collosion
+    /**
+     * This method decreases the players money and removes a specified enemy from the list
+     *@param i the index of the specified (removable) enemy in the listOfEnemies
      */
     public void decreaseMoney(int i) {
         money -= 3500;
         listOfEnemies.remove(i);
     }
 
-    /*
-     * This method is check for is the and of the stage or not
-     * return true if the stage is ended or false if not
+    /**
+     * This method is check for is the an of the stage
+     *@return true if the stage is ended otherwise false
      */
     public boolean isEndOfTheStage() {
         return t == enemiesPerLevel;
     }
     
     
-    /*
-     * This method do the behavior of the enemies
-     * decrase money when collide occurs and
-     * remove that concrete enemy from the listOfEnemies list
-     * return with the integer number of the enemies int the listOfEnemies
+    /**
+     * This method manipulates the behavior of the enemies
+     *@return an integer number of the enemies' number in the listOfEnemies
      */
     @Override
     public int doBehaviorOfEnemies() {
@@ -144,8 +150,8 @@ public class Game implements Runnable, Behavior<Enemy> {
 
         if (isEndOfTheStage()){
             stage += 1;
-            System.out.println("New stage " + stage);
-            enemiesPerLevel = t + 10;
+            enemiesPerLevel = t + 20;
+            money += 10000;
         }
     }
 
@@ -193,8 +199,9 @@ public class Game implements Runnable, Behavior<Enemy> {
         g.dispose();
     }
     
-    /*
+    /**
      * This method returns the difficulty of the Game
+     *@return the difficulty
      */
     public int getDifficulty(){
         return difficulty;
@@ -233,15 +240,16 @@ public class Game implements Runnable, Behavior<Enemy> {
         stop();
     }
 
-    /*
-     * This method return the KeyManager
+    /**
+     * This method returns the KeyManager
+     *@return the keyManager
      */
     public KeyManager getKeyManager(){
 	return keyManager;
     }
     
-    /*
-     * This method start the Game
+    /**
+     * This method starts the game
      */
     public synchronized void start(){
         if(running) return;
@@ -250,8 +258,8 @@ public class Game implements Runnable, Behavior<Enemy> {
         thread.start();
     }
 
-    /*
-     * This method stop the Game
+    /**
+     * This method stops the game
      */
     public synchronized void stop(){
         if(!running) return;

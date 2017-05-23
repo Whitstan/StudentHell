@@ -7,10 +7,27 @@ import java.awt.*;
 
 public class Launcher extends JFrame implements ActionListener
 {
-    public static enum EDifficulty 
-    {
-        Jól_megy_a_matek, Nem_az_erősségem_a_matek, Talán_nem_ide_kéne_jelentkezni, Ötször_öt_egyenlő_harminchat;
+    public enum EDifficulty {
+        DIF1("Jól megy a matek"),
+        DIF2("Nem az erősségem a matek"),
+        DIF3("Talán nem ide kéne jelentkezni"),
+        DIF4("Ötször öt egyenlő harminchat");
+
+        private final String text;
+
+        /**
+         * @param text
+         */
+        private EDifficulty(final String text) {
+            this.text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return text;
+        }
     }
+    
     JButton buttonOk;
     JTextField textName;
     JLabel labelName;
@@ -29,10 +46,10 @@ public class Launcher extends JFrame implements ActionListener
         textName.setPreferredSize(new Dimension(100, 20));
         labelName = new JLabel("A Neptun-kódod pedig:");
         comboBoxDifficulty = new JComboBox();
-        comboBoxDifficulty.addItem(EDifficulty.Jól_megy_a_matek);
-        comboBoxDifficulty.addItem(EDifficulty.Nem_az_erősségem_a_matek);
-        comboBoxDifficulty.addItem(EDifficulty.Talán_nem_ide_kéne_jelentkezni);
-        comboBoxDifficulty.addItem(EDifficulty.Ötször_öt_egyenlő_harminchat);
+        comboBoxDifficulty.addItem(EDifficulty.DIF1);
+        comboBoxDifficulty.addItem(EDifficulty.DIF2);
+        comboBoxDifficulty.addItem(EDifficulty.DIF3);
+        comboBoxDifficulty.addItem(EDifficulty.DIF4);
         
         buttonOk.addActionListener(this);
         
