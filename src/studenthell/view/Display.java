@@ -31,7 +31,7 @@ public class Display {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
-
+       
         frame.add(canvas);
         frame.pack();
     }
@@ -43,7 +43,7 @@ public class Display {
     public JFrame getFrame(){
         return this.frame;
     }
-    
+
     public void destroyWindow(){
         this.getFrame().dispose();
     }
