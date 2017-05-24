@@ -272,6 +272,10 @@ public class Game implements Runnable, Behavior<Enemy> {
         return difficulty;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    
     @Override
     public void run(){
         init();
