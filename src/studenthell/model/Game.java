@@ -264,7 +264,10 @@ public class Game implements Runnable, Behavior<Enemy> {
         }
         
         g.setFont(new Font("Arial Black", Font.PLAIN, 20));        
-        if(lastMoney < money) {
+        if(lastMoney == money) {
+           g.setColor(Color.black);
+           g.drawString("Bankszámlán: " + Long.toString(money), 950, 50); 
+        } else if(lastMoney < money) {
            g.setColor(Color.green);
            g.drawString("Bankszámlán: " + Long.toString(money), 950, 50); 
            
