@@ -84,7 +84,7 @@ public class Launcher extends JFrame implements ActionListener{
    
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == buttonOk && c.getCaptha().equals(captchaTextField.getText().toUpperCase()) ){
+        if(e.getSource() == buttonOk ) { //&& c.getCaptha().equals(captchaTextField.getText().toUpperCase()) ){
             Game game = new Game("StudentHell", 1280, 720, (EDifficulty)comboBoxDifficulty.getSelectedItem(), textName.getText());
             game.start();
         } else {
