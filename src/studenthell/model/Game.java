@@ -67,11 +67,11 @@ public class Game implements Runnable, Behavior<Enemy> {
      */
     
     public Game(String title, int width, int height, Launcher.EDifficulty difficulty, String neptun){
-//        try {
-//            DataSource.getInstance().getConnection().close();
-//        } catch (SQLException ex) {
-//            System.exit(1);
-//        }
+        try {
+            DataSource.getInstance().getConnection().close();
+        } catch (SQLException ex) {
+            System.exit(1);
+        }
         
         this.width = width;
         this.height = height;
@@ -263,7 +263,7 @@ public class Game implements Runnable, Behavior<Enemy> {
             }
         }
         
-        g.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        g.setFont(new Font("Arial Black", Font.PLAIN, 20));        
         if(lastMoney < money) {
            g.setColor(Color.green);
            g.drawString("Bankszámlán: " + Long.toString(money), 950, 50); 
