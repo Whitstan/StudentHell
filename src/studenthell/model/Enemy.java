@@ -15,7 +15,7 @@ public class Enemy extends Rectangle2D.Double{
     }
     
     public void tick(){
-        y += game.getDifficulty()*5;   
+        y += 10/game.getDifficulty();   
     }
     
     public int getType(){

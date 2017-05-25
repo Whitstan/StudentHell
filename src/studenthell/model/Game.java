@@ -13,7 +13,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
-import javax.swing.JTextArea;
 import studenthell.Launcher;
 import studenthell.controller.DataSource;
 import studenthell.controller.HighScore;
@@ -29,7 +28,7 @@ public class Game implements Runnable, Behavior<Enemy> {
     public String title;
     public String neptun;
     
-    private int difficulty = 1;
+    private double difficulty = 1;
     private boolean running = false;
     private Thread thread;
 
@@ -44,7 +43,7 @@ public class Game implements Runnable, Behavior<Enemy> {
     private int enemiesPerLevel = 30;
     private long money = 10000;
     private long lastMoney = money;
-    private long score = money;
+    private long score = 0;
     private int stage = 1;
     private boolean gameOver = false;
     private ArrayList<Enemy> listOfEnemies = new ArrayList<>();
@@ -81,13 +80,13 @@ public class Game implements Runnable, Behavior<Enemy> {
         
         switch(difficulty){
             case DIF2:
-                this.difficulty = 2;
+                this.difficulty = 1;
                 break;
             case DIF3:
-                this.difficulty = 3;
+                this.difficulty = 2;
                 break;
             case DIF4:
-                this.difficulty = 4;
+                this.difficulty = 3;
                 break;    
         }
     }
@@ -104,14 +103,13 @@ public class Game implements Runnable, Behavior<Enemy> {
         
         //Periodic apperance of enemies
         Timer timer = new Timer();
- 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 if (t != enemiesPerLevel){
                     int type = r.nextInt(5-1)+1;
                     int width,height;
-                    int xPosition = r.nextInt(1100);
+                    int xPosition = r.nextInt(1200);
                     switch(type){
                         case 1:
                             width = 35;
@@ -141,9 +139,8 @@ public class Game implements Runnable, Behavior<Enemy> {
                     listOfEnemies.add(new Enemy(Game.this,xPosition,-100,width,height,type));
                     t++;
                 }
-
             }
-        }, 0, 500/difficulty);
+        } ,0, 100);
         // - Periodic apperance of enemies
     }
 
@@ -162,7 +159,6 @@ public class Game implements Runnable, Behavior<Enemy> {
         lastMoney = money;
         money -= 3500;
         listOfEnemies.remove(i);
-        g.setColor(Color.red);
     }
 
     /**
@@ -193,7 +189,7 @@ public class Game implements Runnable, Behavior<Enemy> {
             }
             if (listOfEnemies.get(i).getY() > height){
                 listOfEnemies.remove(i);
-                score += 3500;
+                score++;
             }
         }
         return listOfEnemies.size();
@@ -224,10 +220,13 @@ public class Game implements Runnable, Behavior<Enemy> {
         doBehaviorOfEnemies();
 
         if (isEndOfTheStage()){
-            stage += 1;
+            stage ++;
             enemiesPerLevel = t + 20;
+            if (difficulty <= 10){
+                difficulty ++;
+            }
             lastMoney = money;
-            money += 7000;
+            money += 3500;
         }
     }
 
@@ -263,20 +262,24 @@ public class Game implements Runnable, Behavior<Enemy> {
             }
         }
         
+        g.setColor(Color.GRAY);
+        g.fillRect(940, 10, 250, 70);
+        g.fillRect(90, 20, 110, 45);
+        
         g.setFont(new Font("Arial Black", Font.PLAIN, 20));        
         if(lastMoney == money) {
            g.setColor(Color.black);
-           g.drawString("Bankszámlán: " + Long.toString(money), 950, 50); 
+           g.drawString("Bankszámla: " + Long.toString(money), 950, 50); 
         } else if(lastMoney < money) {
            g.setColor(Color.green);
-           g.drawString("Bankszámlán: " + Long.toString(money), 950, 50); 
+           g.drawString("Bankszámla: " + Long.toString(money), 950, 50); 
            
         } else {
            g.setColor(Color.red); 
            g.drawString("Bankszámlán: " + Long.toString(money), 950, 50);
         }
         
-        g.drawString("Level: " + stage, 100, 50);
+        g.drawString("Félév: " + stage, 100, 50);
         //Drawing-end
 
         bs.show();
@@ -287,7 +290,7 @@ public class Game implements Runnable, Behavior<Enemy> {
      * This method returns the difficulty of the Game
      *@return the difficulty
      */
-    public int getDifficulty(){
+    public double getDifficulty(){
         return difficulty;
     }
 
