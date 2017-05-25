@@ -52,11 +52,12 @@ public class GameTest {
         Player player = new Player(game,368,500,39,63);
         game.setPlayer(player);
         
+        game.getListOfEnemies().add(new Enemy(game, 370,2000,20,30,5));
+        
         for (int i = 0; i < 5; ++i) {
             game.getListOfEnemies().add(new Enemy(game, i,2,3,4,5));
         }
-        
-        int result = game.doBehaviorOfEnemies(); 
+        int result = game.doBehaviorOfEnemies();
         assertEquals(5,result);
     }
     
